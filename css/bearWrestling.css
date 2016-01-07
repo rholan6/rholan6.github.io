@@ -1,0 +1,38 @@
+body
+{
+	background-color:#c8c8c8;
+}
+.bg-info
+{
+	padding:16px 16px 16px 16px;
+	border-radius:69px;
+}
+h1
+{
+	font-family:'Viner Hand ITC', cursive;
+	color:#3c3c3c;
+}
+h2
+{
+	font-family:'Viner Hand ITC', cursive;
+	color:#3c3c3c;
+}
+.list
+{
+	background-color:#bbbbbb;
+	border-radius:16px;
+}
+/*.list */h3
+{
+	text-align:center;
+	font-family:'Papyrus',sans-serif;
+}
+li
+{
+	font-family:'Bradley Hand ITC',sans-serif;
+	font-size:1.1em;
+}
+#gallery
+{
+	float:center;
+}
