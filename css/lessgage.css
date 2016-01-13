@@ -1,0 +1,45 @@
+body
+{
+	background-color: #eeeeee;
+}
+h1
+{
+	text-align : center;
+	font-family : "Papyrus", "Comic Sans MS";
+	//color : #88cccc;
+}
+#formZone
+{
+	border-radius : 16px;
+	background-color : #c3c3c3;
+	padding : 16px 16px 16px 16px;
+	border: 1px solid #eeeeee;
+}
+#fillMe
+{
+	border-radius : 16px;
+	background-color : #c3c3c3;
+	//float : left;
+	text-align: center;
+}
+#meToo
+{
+	border-radius : 16px;
+	background-color : #c3c3c3;
+	//float: right;
+	padding : 6px 6px 6px 6px;
+}
+td
+{
+	border: 1px solid #c3c3c3;
+	padding: 1px 1px 1px 1px;
+	text-align: center;
+}
+th
+{
+	text-align: center;
+}
+h2
+{
+	text-align: center;
+}

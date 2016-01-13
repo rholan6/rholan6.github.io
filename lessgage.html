@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+	<link rel = "stylesheet" href = "css/lessgage.css" type = "text/css">
+	
+	<!-- Set favicon -->
+	<link rel = "icon" type = "image/png" href = "images/houseFavicon.png">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+	
+	<title>Mortgages are fun, right?</title>
+  </head>
+  <body>
+	<div class = "container-fluid">
+		<h1>Mortgage Schedule</h1>
+	</div>
+	<div class = "col-sm-1"></div>
+	<div class = "col-sm-10" id = "formZone">
+		<fieldset>
+			<legend>
+				Enter Mortgage Info
+			</legend>
+			<div class="form-group">	
+				<div class = "col-sm-3">
+					<div class="form-group">						
+						<label for="yearDDL">How many years do you want to pay this off?: </label> 
+						<!-- drop down list -->
+						<select class="form-control" id="yearDDL"> 
+							<option value=15>15</option> 
+							<option value=20>20</option> 
+							<option value=30 selected="selected">30</option> 
+						</select> 					
+					</div>	
+				</div>
+				<div class = "col-sm-3">
+					<label for="userNameTB" >Enter your annual interest rate as a decimal: </label>
+					<!-- form-control class for inputs to take up the whole width of the screen
+						and they are vertical (label above the input) for mobile devices -->
+					<input type="text" class="form-control" id="yrRate" placeholder="Annual interest rate"/> 
+				</div>
+				<div class = "col-sm-3">
+					<label for="userNameTB" >How much money is the loan?: </label>
+					<!-- form-control class for inputs to take up the whole width of the screen
+						and they are vertical (label above the input) for mobile devices -->
+					<input type="text" class="form-control" id="principal" placeholder="Principal"/> 
+				</div>
+			</div>
+			<div class="form-group col-sm-3">
+				<label for="userNameTB" >View from month </label>
+					<!-- form-control class for inputs to take up the whole width of the screen
+						and they are vertical (label above the input) for mobile devices -->
+					<input type="text" class="form-control" id="m1" placeholder="Start month"/>
+					<label for="userNameTB" >to </label>
+					<!-- form-control class for inputs to take up the whole width of the screen
+						and they are vertical (label above the input) for mobile devices -->
+					<input type="text" class="form-control" id="m2" placeholder="End month"/> 
+				<!-- all bootstrap buttons should have class btn and a button type -->
+				<button type="button" id="submitButton" class="btn btn-default">
+					<!-- a glyphicon is a scalable pic that can be used in controls. 
+					always create an empty span with the glyphicon class and the desired pic (http://glyphicons.com/) -->
+					<span class="glyphicon glyphicon-piggy-bank"></span>
+					Calculate 
+				</button>
+			</div>			
+		</fieldset>
+	</div>
+	<div class = "col-sm-1"></div>
+	<div id = "fillMe" class = "col-lg-5 col-xs-12">
+	
+	</div>
+	<div id = "meToo" class = "col-lg-6 col-xs-12">
+	
+	</div>
+	
+    <!-- Fun fact: Chicago actually owns the whole universe. Except for Wisconsin. Nobody wants Wisconsin. -->
+	
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+	<script type = "text/javascript">
+	/* BEGIN JS */
+		//calculation functions
+		function getMonthlyRate(annualRate) {
+			return annualRate / 12;
+		}
+		function getNumMonths(years) {
+			return years * 12;
+		}
+		function getMonthlyPayment(intRate, numMonths, principal) {
+			var bottom = Math.pow(1 + intRate, -numMonths);
+			bottom = 1 - bottom;
+			var divide = intRate / bottom;
+			return divide * principal;
+		}
+		//var rate = getMonthlyRate(0.69);
+		//var months = getNumMonths(15);
+		//console.log(getMonthlyPayment(rate, months, 1000));
+		
+		//recieve input
+		var submitButton = document.querySelector("#submitButton");
+		submitButton.addEventListener("click", calculate, false);
+		function calculate() {
+			var annual = document.querySelector("#yrRate").value;
+			var monthly = getMonthlyRate(annual);
+			var ddYears = document.querySelector("#yearDDL");
+			var yearIndex = ddYears.selectedIndex;
+			var years = ddYears[yearIndex].value;
+			var months = getNumMonths(years);
+			var principal = document.querySelector("#principal").value;
+			var start = document.querySelector("#m1").value;
+			var end = document.querySelector("#m2").value;
+			console.log("Annual: " + annual);
+			console.log("Monthly: " + monthly);
+			console.log("Years: " + years);
+			console.log("Months: " + months);
+			console.log("Principal: " + principal);
+			makeTable(monthly, months, principal, start, end);
+			//makeTable2(monthly, months, principal);
+		}
+		function row(monthlyPay, pPaid, iPaid, pLeft) {
+			this.monthlyPay = monthlyPay;
+			this.pPaid = pPaid;
+			this.iPaid = iPaid;
+			this.pLeft = pLeft;
+		}
+		function makeTable(monthly, months, principal, start, end) {
+			var tableZone = $("#fillMe");
+			document.querySelector("#fillMe").innerHTML = "";
+			tableZone.append("<h2>Schedule</h2>")
+			tableZone.append('<table class = "table">');
+			tableZone.append("<tr>");
+			tableZone.append("<th>#</th>");
+			tableZone.append("<th>Monthly Payment</th>");
+			tableZone.append("<th>Principal Paid</th>");
+			tableZone.append("<th>Interest Paid</th>");
+			tableZone.append("<th>Principal Remaining</th>");
+			tableZone.append("</tr>")
+			var pPaid = 0;
+			var iPaid = 0;
+			var monthlyPay = getMonthlyPayment(monthly, months, principal);
+			var pLeft = principal;
+			var totalI = 0;
+			var rows = [];
+			rows.push(new row(0, 0, 0, 0)); //makes life easier by indexing the first month at 1
+			for(var i = 1; i <= months; i++) {
+				iPaid = monthly * pLeft;
+				pPaid = monthlyPay - iPaid;
+				pLeft = pLeft - pPaid;
+				totalI += iPaid;
+				rows.push(new row(monthlyPay, pPaid, iPaid, pLeft));
+				/*tableZone.append("<tr>");
+				tableZone.append("<td>" + i + "</td>");
+				tableZone.append("<td>" + monthlyPay.toFixed(2) + "</td>");
+				tableZone.append("<td>$" + pPaid.toFixed(2) + "</td>");
+				tableZone.append("<td>$" + iPaid.toFixed(2) + "</td>");
+				tableZone.append("<td>$" + pLeft.toFixed(2) + "</td>");
+				tableZone.append("</tr>");*/
+			}
+			for(var i = start; i <= end; i++) {
+				tableZone.append("<tr>");
+				tableZone.append("<td>" + i + "</td>");
+				tableZone.append("<td>" + rows[i].monthlyPay.toFixed(2) + "</td>");
+				tableZone.append("<td>$" + rows[i].pPaid.toFixed(2) + "</td>");
+				tableZone.append("<td>$" + rows[i].iPaid.toFixed(2) + "</td>");
+				tableZone.append("<td>$" + rows[i].pLeft.toFixed(2) + "</td>");
+				tableZone.append("</tr>");
+			}
+			tableZone.append("</table>");
+			makeTable2(monthly, months, principal, monthlyPay, totalI);
+		}
+		function makeTable2(monthly, months, principal, monthlyPay, totalI) {
+			var tableZone = $("#meToo");
+			var total = monthlyPay * months;
+			var ratio = total / principal;
+			monthly = monthly * 100;
+			document.querySelector("#meToo").innerHTML = "";
+			tableZone.append("<h2>Summary</h2>");
+			tableZone.append('<table class = "table">');
+			tableZone.append("<tr>");
+			tableZone.append("<th>Loan Amount</th>");
+			tableZone.append("<th>Monthly Interest Rate</th>");
+			tableZone.append("<th>Monthly Payment</th>");
+			tableZone.append("<th>Total Paid</th>");
+			tableZone.append("<th>Total Interest Paid</th>");
+			tableZone.append("<th>Amount / Principal</th>");
+			tableZone.append("</tr>");
+			tableZone.append("<tr>");
+			tableZone.append("<td>$" + principal/*.toFixed(2)*/ + "</td>");
+			tableZone.append("<td>" + monthly + "%</td>");
+			tableZone.append("<td>$" + monthlyPay.toFixed(2) + "</td>");
+			tableZone.append("<td>$" + total.toFixed(2) + "</td>");
+			tableZone.append("<td>$" + totalI.toFixed(2) + "</td>");
+			tableZone.append("<td>" + ratio + "</td>");
+			tableZone.append("</tr>");
+			tableZone.append("</table>");
+		}
+		
+	/* END JS */
+	</script>
+  </body>
+</html>
