@@ -38,9 +38,6 @@
     <div id = "form">
         
     </div>
-    <div id = "categories">
-        
-    </div>
     <div id = "result">
       
     </div>
@@ -58,6 +55,8 @@
         $(document).ready(function() {
             //get id
             var uuid;
+            var feline;
+            var user;
             var homepageDB = new Firebase("https://homiepages.firebaseio.com/");
             var idButton = document.querySelector("#idButton");
             idButton.addEventListener("click", idFunc, false);
@@ -81,8 +80,8 @@
                     if(found === false && loops > 0) {
                         homepageDB.child(uuid).set("");
                     }
-                    homepageDB = homepageDB.child(uuid);
-                    formFiller(homepageDB/*.child(uuid)*/);
+                    user = homepageDB.child(uuid);
+                    formFiller(user/*.child(uuid)*/);
                     //homepageDB.child(uuid).set("");
                     //homepageDB = homepageDB.child(uuid);
                     //homepageDB.child("cat1").set("XDCC");
@@ -111,7 +110,7 @@
                     //make a new item
                     //homepageDB.child(kittyGory).set("");
                 //}
-                homepageDB.once("value", function(snapshot) {
+                user.once("value", function(snapshot) {
                     console.log("entering category snapshot function");
                     var found = false;
                     //var loops = 0;
@@ -126,7 +125,7 @@
                     console.log("After snapshot loop");
                     if(found === false/* && loops > 0*/) {
                         console.log("adding category");
-                        homepageDB.child(kittyGory).set("");
+                        user.child(kittyGory).set("");
                         //homepageDB.push({Category: kittyGory});
                     }
                     //homepageDB = homepageDB.child(kittyGory);
@@ -139,13 +138,13 @@
                 //homepageDB = homepageDB.child(kittyGory);
                 //Tell the user what sites they already have
                 formZone.innerHTML += "<div class = 'col-sm-12'><h3>Existing sites for this category:</h3></div>";
-                homepageDB = homepageDB.child(kittyGory);
-                homepageDB.once("value", function(snapshot) {
+                feline = user.child(kittyGory);
+                feline.once("value", function(snapshot) {
                     //formZone.innerHTML += "<ul>";
                     snapshot.forEach(function(childSS) {
                         console.log(childSS.val());
                         if(childSS.val() === "") {
-                            homepageDB.child(childSS.key()).remove;
+                            feline.child(childSS.key()).remove;
                         }
                         else {
                         formZone.innerHTML += "<div class = 'col-sm-4 link'><a href = '" + childSS.val() + "'><h4>" + childSS.key() + /*" (" + childSS.val() + ")*/"</h4></a></div>";
@@ -176,19 +175,55 @@
                         currentSite = document.querySelector("#site" + i).value;
                         currentUrl = document.querySelector("#link" + i).value;
                         //homepageDB.push({site: currentSite, url: currentUrl});
-                        homepageDB.child(currentSite).set(currentUrl);
+                        feline.child(currentSite).set(currentUrl);
                     }
                 }
                 //serve the page
                 formZone.innerHTML = "";
-               /* var siteZone = document.querySelector("#result");
-                homepageDB = Firebase("http://homiepages.firebaseio.com");
-                homepageDB.once("value", function(snapshot) {
-                    snapshot.forEach(childSS) {
+                var siteZone = document.querySelector("#result");
+                //homepageDB = Firebase("http://homiepages.firebaseio.com");
+                
+                user.once("value", function(snapshot) {
+                    /*siteZone.innerHTML += "<ul class = 'nav nav-pills' id = 'tabs'></ul>";
+                    var tabs = document.querySelector("#tabs");
+                    var tabnum = 1;
+                    snapshot.forEach(function(childSS) {
                         
-                    }
-                })*/
+                        //var tabs = document.querySelector("#tabs");
+                        tabs.innerHTML += "<li role = 'presentation' class = 'dropdown' id = 'tabdropdown" + tabnum + "'></li>";
+                        var tabdropdown = document.querySelector("#tabdropdown" + tabnum);
+                        tabdropdown.innerHTML += "<a class = 'dropdown-toggle' data-toggle = 'dropdown' href = 'homiepage.html' data-target = '#dropdown" + tabnum + "' role = 'button' aria-haspopup = 'true' aria-expanded = 'false' id = 'dropdownlink" + tabnum + "'></a>";
+                        var dropdownlink = document.querySelector("#dropdownlink" + tabnum);
+                        dropdownlink.innerHTML += childSS.key() + "<span class = 'caret'></span>";
+                        //tabdropdown.innerHTML += "</a>";
+                        dropdownlink.innerHTML += "<ul class = 'dropdown-menu' aria-labelledby = 'dropdownlink" + tabnum + "' id = 'dropdown" + tabnum + "'></ul>";
+                        //tabdropdown.innerHTML += "</a>";
+                        childSS.forEach(function(grandchild) {
+                            var dropdown = document.querySelector("#dropdown" + tabnum);
+                            dropdown.innerHTML += "<li id = 'list" + tabnum + "'><a href = '" + grandchild.val() + "'>" + grandchild.key() + "</a></li>";
+                        });
+                        //siteZone.innerHTML += "</ul>";
+                        //siteZone.innerHTML += "</li>";
+                    });
+                    //siteZone.innerHTML += "</ul>";*/
+                    var catnum = 1;
+                    var catdiv;
+                    snapshot.forEach(function(childSS) {
+                        siteZone.innerHTML += "<div class = 'col-sm-3 catcol' id = 'category" + catnum + "'></div>";
+                        catdiv = document.querySelector("#category" + catnum);
+                        catdiv.innerHTML += "<h3>" + childSS.key() + "</h3>";
+                        catdiv.innerHTML += "<ul id = 'catlist" + catnum + "'></ul>"
+                        var listdiv = document.querySelector("#catlist" + catnum);
+                        childSS.forEach(function(grandchild) {
+                            listdiv.innerHTML += "<li class = 'linkedList'><a href = '" + grandchild.val() + "'>" + grandchild.key() + "</a></li>";
+                        });
+                        catnum++;
+                    });
+                });
+                var title = document.querySelector("title");
+                title.innerHTML = uuid + "'s Awesome Homepage";
             }
+            
         })
       </script>
   </body>

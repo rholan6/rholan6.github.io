@@ -28,3 +28,16 @@ h3
 {
     text-align: center;
 }
+
+.catcol
+{
+    background-color: #dddddd;
+    border-radius: 16px;
+    border: 1px solid #eeeeee;
+    //margin: 1px 1px 1px 1px;
+}
+
+.linkedList
+{
+    text-align: center;
+}
