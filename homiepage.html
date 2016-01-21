@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+      
+      <link rel = "stylesheet" href = "css/homiepage.css" type="text/css">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+	
+	<title>Homepage Generator 5000</title>
+  </head>
+  <body>
+    <div id = "id">
+        <div class = "form-group col-sm-11">
+            <label for = "idBox">Enter your ID</label>
+            <input type = "text" class = "form-control" id = "idBox" placeholder = "Be sure to remember what you put here"/>
+        </div>
+        <br/>
+        <button type = "button" id = "idButton" class = "btn btn-default">
+            OK
+            <span class = "glyphicon glyphicon-ok"></span>
+        </button>
+    </div>
+    <div id = "form">
+        
+    </div>
+    <div id = "categories">
+        
+    </div>
+    <div id = "result">
+      
+    </div>
+	
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+     
+      <!-- firebase library -->
+		<script src="https://cdn.firebase.com/js/client/2.3.2/firebase.js"></script>
+      
+    <!-- Actual script -->
+      <script type = "text/javascript">
+        $(document).ready(function() {
+            //get id
+            var uuid;
+            var homepageDB = new Firebase("https://homiepages.firebaseio.com/");
+            var idButton = document.querySelector("#idButton");
+            idButton.addEventListener("click", idFunc, false);
+            function idFunc() {
+                uuid = document.querySelector("#idBox").value;
+                //console.log(uuid);
+                //either fetch data for that id or add a new page
+                homepageDB.once("value", function(snapshot) {
+                    //if(homepageDB.child(uuid) === undefined) {
+                        //homepageDB.child(uuid).set("");
+                    //}
+                    var found = false;
+                    var loops = 0;
+                    snapshot.forEach(function(childSS) {
+                        if(childSS.key() === uuid) {
+                            found = true;
+                            //break;
+                        }
+                        loops++;
+                    })
+                    if(found === false && loops > 0) {
+                        homepageDB.child(uuid).set("");
+                    }
+                    homepageDB = homepageDB.child(uuid);
+                    formFiller(homepageDB/*.child(uuid)*/);
+                    //homepageDB.child(uuid).set("");
+                    //homepageDB = homepageDB.child(uuid);
+                    //homepageDB.child("cat1").set("XDCC");
+                })
+            }
+            var formZone = document.querySelector("#form");
+            //fill out "form" div (used for adding categories and pages)
+            function formFiller(userPage) {
+                document.querySelector("#id").innerHTML = "";
+                /*formZone.innerHTML = formZone.innerHTML;*/
+                //formZone.innerHTML += "<h1>YER MUM</h1>";
+                formZone.innerHTML += "<!-- Bush did 9/11 -->";
+                formZone.innerHTML += "<div class = 'col-sm-11'><label for='cat1' >Enter a category: </label><input type='text' class='form-control' id='cat1' placeholder='Category'/></div><div class = 'col-sm-1'><br/><button type = 'button' id = 'catButt' class = 'btn btn-default'> Submit <span class = 'glyphicon glyphicon-refresh'></span></button></div>";
+                /*formZone.innerHTML += "<div class = 'col-sm-12'><label for='site1' >Enter the names and urls for a few sites in this category: </label></div>";
+                for(var i = 1; i <= 3; i++) {
+                    formZone.innerHTML += "<div class = 'col-sm-6'><input type='text' class='form-control' id='site" + i +"' placeholder='Site name'/></div><div class = 'col-sm-6'><input type='text' class='form-control' id='link" + i + "' placeholder = 'url'/></div>"
+                }*/
+                var catButt = document.querySelector("#catButt");
+                catButt.addEventListener("click", catButtPressed, false);
+            }
+            function catButtPressed() {
+                var kittyGory = document.querySelector("#cat1").value;
+                console.log(kittyGory);
+                formZone.innerHTML = "<h1>" + kittyGory + "</h1>";
+                //if(homepageDB.child(kittyGory) === undefined) {
+                    //make a new item
+                    //homepageDB.child(kittyGory).set("");
+                //}
+                homepageDB.once("value", function(snapshot) {
+                    console.log("entering category snapshot function");
+                    var found = false;
+                    //var loops = 0;
+                    snapshot.forEach(function(childSS) {
+                        console.log("entering category snapshot loop");
+                        if(childSS.key() === kittyGory) {
+                            found = true;
+                            //break;
+                        }
+                        //loops++;
+                    })
+                    console.log("After snapshot loop");
+                    if(found === false/* && loops > 0*/) {
+                        console.log("adding category");
+                        homepageDB.child(kittyGory).set("");
+                        //homepageDB.push({Category: kittyGory});
+                    }
+                    //homepageDB = homepageDB.child(kittyGory);
+                })
+                //else {
+                    //print out items already in this category
+                    //formZone.innerHTML += "Fail";
+                    
+                //}
+                //homepageDB = homepageDB.child(kittyGory);
+                //Tell the user what sites they already have
+                formZone.innerHTML += "<div class = 'col-sm-12'><h3>Existing sites for this category:</h3></div>";
+                homepageDB = homepageDB.child(kittyGory);
+                homepageDB.once("value", function(snapshot) {
+                    //formZone.innerHTML += "<ul>";
+                    snapshot.forEach(function(childSS) {
+                        console.log(childSS.val());
+                        if(childSS.val() === "") {
+                            homepageDB.child(childSS.key()).remove;
+                        }
+                        else {
+                        formZone.innerHTML += "<div class = 'col-sm-4 link'><a href = '" + childSS.val() + "'><h4>" + childSS.key() + /*" (" + childSS.val() + ")*/"</h4></a></div>";
+                        }
+                    })
+                    //formZone.innerHTML += "</ul>";
+                //})
+                    //Tell the user to enter sites
+                    formZone.innerHTML += "<div class = 'col-sm-12'><h4><label for='site1' >Enter the names and urls for a few sites in this category: </label></h4></div>";
+                    //loop to make the text boxes
+                    for(var i = 1; i <= 3; i++) {
+                        formZone.innerHTML += "<div class = 'col-sm-6'><input type='text' class='form-control' id='site" + i +"' placeholder='Site name'/></div><div class = 'col-sm-6'><input type='text' class='form-control' id='link" + i + "' placeholder = 'url'/></div>"
+                    }
+                    //make the submit button
+                    formZone.innerHTML += "<div class = 'col-sm-12'><button type = 'button' id = 'addSites' class = 'btn btn-default'>Add Sites <span class = 'glyphicon glyphicon-floppy-disk'></span></button></div>"
+                    addSites.addEventListener("click", addSite, false);
+                })
+            }
+            //take in "form" info
+            function addSite() {
+                console.log("Entering addSite()");
+                var currentSite;
+                var currentUrl;
+                for(var i = 1; i <= 3; i++) {
+                    console.log("entering addSite loop");
+                    if(document.querySelector("#site" + i).value !== "") {
+                        console.log("Entering addSite loop's if statement");
+                        currentSite = document.querySelector("#site" + i).value;
+                        currentUrl = document.querySelector("#link" + i).value;
+                        //homepageDB.push({site: currentSite, url: currentUrl});
+                        homepageDB.child(currentSite).set(currentUrl);
+                    }
+                }
+                //serve the page
+                formZone.innerHTML = "";
+               /* var siteZone = document.querySelector("#result");
+                homepageDB = Firebase("http://homiepages.firebaseio.com");
+                homepageDB.once("value", function(snapshot) {
+                    snapshot.forEach(childSS) {
+                        
+                    }
+                })*/
+            }
+        })
+      </script>
+  </body>
+</html>
