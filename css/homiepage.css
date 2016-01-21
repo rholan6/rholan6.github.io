@@ -1,15 +1,18 @@
 body
 {
+    //light grey
     background-color: #eeeeee;
 }
 
 label
 {
+    //dark grey
     color: #3c3c3c;
 }
 
 a
 {
+    //no underline and a custom blue
     text-decoration: none;
     color: #3c3cc3;
 }
@@ -31,10 +34,14 @@ h3
 
 .catcol
 {
+    //slightly darker grey than body background
     background-color: #dddddd;
+    //round corners make everything look better
     border-radius: 16px;
+    //thin border (same color as body background)
     border: 1px solid #eeeeee;
-    //margin: 1px 1px 1px 1px;
+    //give the categories some room to breathe
+    margin-bottom: 6px;
 }
 
 .linkedList
