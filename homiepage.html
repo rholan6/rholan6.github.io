@@ -96,13 +96,22 @@
                 //clear the id input div, we're done with that
                 document.querySelector("#id").innerHTML = "";
                 formZone.innerHTML += "<!-- Bush did 9/11 -->";
-                //have the user enter a category
-                formZone.innerHTML += "<div class = 'col-sm-11'><label for='cat1' >Enter a category: </label><input type='text' class='form-control' id='cat1' placeholder='Category'/></div><div class = 'col-sm-1'><br/><button type = 'button' id = 'catButt' class = 'btn btn-default'> Submit <span class = 'glyphicon glyphicon-refresh'></span></button></div>";
-                //get the category when they hit the submit button
-                var catButt = document.querySelector("#catButt");
-                catButt.addEventListener("click", catButtPressed, false);
+                //tell the user about existing categories
+                formZone.innerHTML += "<div class = 'col-sm-12'><h3>Existing categories:</h3></div>";
+                user.once("value", function(snapshot) {
+                    snapshot.forEach(function(childSS) {
+                        formZone.innerHTML += "<div class = 'col-sm-4'><h4>" + childSS.key() + "</h4></div>";
+                    });
+                //});
+                    //have the user enter a category
+                    formZone.innerHTML += "<div class = 'col-sm-11'><label for='cat1' >Enter a category: </label><input type='text' class='form-control' id='cat1' placeholder='Type one from the list above to modify its contents or enter a new one to add a new category'/></div><div class = 'col-sm-1'><br/><button type = 'button' id = 'catButt' class = 'btn btn-default'> Submit <span class = 'glyphicon glyphicon-refresh'></span></button></div>";
+                    //get the category when they hit the submit button
+                    var catButt = document.querySelector("#catButt");
+                    catButt.addEventListener("click", catButtPressed, false);
+                });
             }
             function catButtPressed() {
+                console.log("category button pressed");
                 //make a variable for this category
                 var kittyGory = document.querySelector("#cat1").value;
                 console.log(kittyGory);
