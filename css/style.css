@@ -1,34 +1,44 @@
 body
 {
-	background-color:rgb(12,55,90);
+	background-color:#378b2e;
 	font-family:'Comic Sans MS';
 }
 h1
 {
-	color:rgb(206,205,148);
+	color:#074600;
 	text-align:center;
 }
 h3
 {
-	color:rgb(225,230,224);
+	color:#5fae57;
 	text-align:center;
 }
 a
 {
-	color:rgb(42,189,233);
+	/*color:rgb(42,189,233);*/
+    color:#92d18b;
 	text-decoration:none;
+    target:_blank;
 }
-#left
+.sidebar
 {
 	float:left;
-	border:5px solid rgb(89,40,46);
+	border:5px solid #1a6811;
 	border-radius: 16px;
 	margin: 16px 16px 16px 16px;
 	padding: 6px 6px 69px 6px;
-	background-color:rgb(90,43,51);
+	background-color:#074600;
 	text-align:left;
 }
 #install
 {
 	color:#3cc33c;
+}
+#left
+{
+    float:left;
+}
+#right
+{
+    float:right;
 }

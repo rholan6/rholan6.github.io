@@ -1,27 +1,56 @@
 <!DOCTYPE html>
 <html>
 	<head>
+        <meta charset='utf-8'>
+        <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+        <meta name='viewport' content='width=device-width, initial-scale=1'>
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    
+        <!-- Bootstrap CSS -->
+        <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css' integrity='sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7' crossorigin='anonymous'>
 		<title>
-			Rob Holan's Web Portfolio
+			The Fruits of Taking a Web Dev Course
 		</title>
-		<link type="text/css"; rel="stylesheet"; href="css/style.css">
+		<link type='text/css'; rel='stylesheet'; href='css/style.css'>
 	</head>
 	<body>
 		<center>
 			<h1>
 				Still in progress
 			</h1>
-			<div id = "left">
+			<div id = 'left' class = 'sidebar col-sm-4'>
 				<h3>
 					Important links
 				</h3>
 				<ul>
-					<li><a href = "mailto:rholan@carthage.edu">E-mail</a></li>
-					<li><a href = "http://github.com/rholan6">Github</a></li>
-					<li><a href = "http://markm208.github.io/images/medium.jpg">Beautiful artwork</a></li>
-					<li><a href = "http://www.gentoo.org";id="install">&gt Install Gentoo</a></li>
+					<li><a href = 'mailto:rholan@carthage.edu'>E-mail</a></li>
+					<li><a href = 'http://github.com/rholan6'>Github</a></li>
+					<li><a href = 'http://wikichat.github.io/'>Wikichat (Collaboration with Nathan Motley)</a></li>
+					<li><a href = 'http://www.gentoo.org' id='install'>&gt Install Gentoo</a></li>
 				</ul>
 			</div>
+            <div id = 'center' class = 'col-sm-4' 'col-xs-12'></div>
+            <div id = 'right' class = 'sidebar col-sm-4'>
+                <h3>
+                    Assignments
+                </h3>
+                <ul>
+                    <li><a href = 'bearWrestling.html'>Homework 1: Dr. Mark Mahoney's Online Resume (Warning: not guaranteed to contain accurate information)</a></li>
+                    <li><a href = 'lessgage.html'>Homework 2: Mortgage Schedule</a></li>
+                    <li><a href = 'homiepage.html'>Project 1: Free (Homepage/New Tab Page Generator)</a></li>
+                    <li><a href = 'http://wikichat.github.io'>Project 2: Free (Wikichat)(External Link)</a></li>
+                </ul>
+            </div>
 		</center>
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js'></script>
+        <!-- Latest compiled and minified JavaScript -->
+        <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js' integrity='sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS' crossorigin='anonymous'></script>
+        <script type = 'text/javascript'>
+            $(document).ready(function() {
+                //Open all links in new window without putting target='_blank' on each one by hand
+                $('a').attr('target', '_blank')
+            })
+        </script>
 	</body>
 </html>
