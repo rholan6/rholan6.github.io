@@ -5,18 +5,18 @@ body
 }
 h1
 {
-	color:#074600;
+	/*color:#074600;*/
 	text-align:center;
 }
 h3
 {
-	color:#5fae57;
+	/*color:#5fae57;*/
 	text-align:center;
 }
 a
 {
 	/*color:rgb(42,189,233);*/
-    color:#92d18b;
+    /*color:#92d18b;*/
 	text-decoration:none;
     target:_blank;
 }
@@ -29,10 +29,6 @@ a
 	padding: 6px 6px 69px 6px;
 	background-color:#074600;
 	text-align:left;
-}
-#install
-{
-	color:#3cc33c;
 }
 #left
 {
